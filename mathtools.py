@@ -14,7 +14,8 @@ mathtool — консольное приложение для решения а�
 import sys
 import math
 
-MAX_VALUE = 10000
+MAX_VALUE = 20000
+
 
 def print_help():
     print("mathtool — решение уравнений вида A*x^2 + B*x + C = 0")
@@ -43,14 +44,15 @@ def parse_arguments(args):
         c_str = input("Введите C: ")
 
     elif len(args) == 7:
+        print(args)
         if args[1] != "-a" or args[3] != "-b" or args[5] != "-c":
             print("ОШИБКА: неизвестный параметр", file=sys.stderr)
             sys.exit(1)
         a_str, b_str, c_str = args[2], args[4], args[6]
 
-        else:
-            print("ОШИБКА: неверный набор параметров", file=sys.stderr)
-            sys.exit(1)
+    else:
+        print("ОШИБКА: неверный набор параметров", file=sys.stderr)
+        sys.exit(1)
 
     return a_str, b_str, c_str
 
