@@ -1,6 +1,3 @@
-# Главный файл, его и запускаем. Тут выбирается команда и печатается результат
-"""Точка входа консольного приложения mathtool."""
-
 import sys
 
 from calc import equation, integration, series, stats
