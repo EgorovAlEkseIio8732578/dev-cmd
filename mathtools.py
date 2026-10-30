@@ -1,125 +1,143 @@
-"""
-mathtool — консольное приложение для решения алгебраических уравнений
-вида A*x^2 + B*x + C = 0.
-
-Запуск:
-    python mathtool.py                         вывод справки
-    python mathtool.py --help                  вывод справки
-    python mathtool.py solve                   ввод коэффициентов с клавиатуры
-    python mathtool.py solve -a 1 -b -3 -c 2   решение с заданными коэффициентами
-
-Коэффициенты A, B, C — целые числа, по модулю не превышающие MAX_VALUE.
-"""
+# Главный файл, его и запускаем. Тут выбирается команда и печатается результат
+"""Точка входа консольного приложения mathtool."""
 
 import sys
-import math
 
-MAX_VALUE = 20000
-
-
-def print_help():
-    print("mathtool — решение уравнений вида A*x^2 + B*x + C = 0")
-    print()
-    print("Использование:")
-    print("    python mathtool.py                         вывод справки")
-    print("    python mathtool.py --help                  вывод справки")
-    print("    python mathtool.py solve                   ввод коэффициентов с клавиатуры")
-    print("    python mathtool.py solve -a 1 -b -3 -c 2   решение с заданными коэффициентами")
-    print()
-    print(f"Коэффициенты A, B, C — целые числа, по модулю не превышающие {MAX_VALUE}.")
+from calc import equation, integration, series, stats
+from cli import build_parser
 
 
-def parse_arguments(args):
-    if len(args) == 0 or args[0] == "--help":
-        print_help()
-        sys.exit(0)
+def read_values(input_path):
+    #Прочитать числа из файла или стандартного ввода
+    values = []
 
-    if args[0] != "solve":
-        print("ОШИБКА: неизвестная команда", file=sys.stderr)
-        sys.exit(1)
-
-    if len(args) == 1:
-        a_str = input("Введите A: ")
-        b_str = input("Введите B: ")
-        c_str = input("Введите C: ")
-
-    elif len(args) == 7:
-        print(args)
-        if args[1] != "-a" or args[3] != "-b" or args[5] != "-c":
-            print("ОШИБКА: неизвестный параметр", file=sys.stderr)
-            sys.exit(1)
-        a_str, b_str, c_str = args[2], args[4], args[6]
-
+    if input_path:
+        try:
+            with open(input_path, encoding="utf-8-sig") as handle:
+                sources = handle
+                _read_lines(values, sources)
+        except OSError as error:
+            raise ValueError("ОШИБКА: файл не открывается") from error
     else:
-        print("ОШИБКА: неверный набор параметров", file=sys.stderr)
-        sys.exit(1)
+        _read_lines(values, sys.stdin)
 
-    return a_str, b_str, c_str
-
-
-def convert_to_int(a_str, b_str, c_str):
-    try:
-        a = int(a_str)
-        b = int(b_str)
-        c = int(c_str)
-    except ValueError:
-        print("ОШИБКА: коэффициент не является целым числом", file=sys.stderr)
-        sys.exit(1)
-    return a, b, c
-
-def validate_range(a, b, c):
-    
-    if abs(a) > MAX_VALUE or abs(b) > MAX_VALUE or abs(c) > MAX_VALUE:
-        print("ОШИБКА: значение вне допустимого диапазона", file=sys.stderr)
-        sys.exit(1)
+    stats.validate_values(values)
+    return values
 
 
-def solve_linear(b, c):
-   
-    if b != 0:
+def _read_lines(values, source):
+    for line in source:
+        for word in line.split():
+            try:
+                values.append(float(word))
+            except ValueError as error:
+                raise ValueError(f"ОШИБКА: {word} не является числом") from error
+
+
+def process_solve(args):
+    supplied = [args.a is not None, args.b is not None, args.c is not None]
+    if any(supplied) and not all(supplied):
+        raise ValueError("ОШИБКА: укажите все три коэффициента либо ни одного")
+
+    if not any(supplied):
+        a = int(input("Введите A: "))
+        b = int(input("Введите B: "))
+        c = int(input("Введите C: "))
+    else:
+        a, b, c = args.a, args.b, args.c
+
+    equation.validate_coefficients(a, b, c)
+    kind, discriminant, roots = equation.solve(a, b, c)
+
+    if kind == "линейное":
         print("Уравнение линейное")
-        x = -c / b
-        print(f"x = {x:.3f}")
-    else:
-        
-        print("ОШИБКА: это не уравнение, неизвестное отсутствует", file=sys.stderr)
-        sys.exit(1)
+        print(f"x = {roots[0]:.3f}")
+        return 0
 
-
-def solve_quadratic(a, b, c):
-    
     print("Уравнение квадратное")
+    print(f"D = {discriminant}")
 
-    d = b * b - 4 * a * c
-    print(f"D = {d}")
-
-    if d > 0:
-        x1 = (-b + math.sqrt(d)) / (2 * a)
-        x2 = (-b - math.sqrt(d)) / (2 * a)
-        print(f"x1 = {x1:.3f}")
-        print(f"x2 = {x2:.3f}")
-    elif d == 0:
-        x = -b / (2 * a)
-        print(f"x = {x:.3f}")
+    if len(roots) == 2:
+        print(f"x1 = {roots[0]:.3f}")
+        print(f"x2 = {roots[1]:.3f}")
+    elif len(roots) == 1:
+        print(f"x = {roots[0]:.3f}")
     else:
         print("Действительных корней нет")
 
+    return 0
 
-def solve(a, b, c):
-  
-    if a == 0:
-        solve_linear(b, c)
+
+def process_stats(args):
+    values = read_values(args.input)
+
+    for label, function, decimals in stats.REPORT:
+        value = function(values)
+        if value is None:
+            print(f"{label}: НЕ СУЩЕСТВУЕТ")
+        elif decimals == 0:
+            print(f"{label}: {value}")
+        else:
+            print(f"{label}: {value:.{decimals}f}")
+
+    return 0
+
+
+def process_series(args):
+    term_function, formula = series.FORMULAS[args.func]
+
+    if args.terms is not None:
+        term_count, result = series.sum_by_terms(term_function, args.terms)
     else:
-        solve_quadratic(a, b, c)
+        term_count, result = series.sum_by_eps(term_function, args.eps)
 
+    print(formula)
+    print(f"Слагаемых: {term_count}")
+    print(f"Сумма ряда: {result:.4f}")
+    return 0
+
+
+def process_integrate(args):
+    info = integration.FUNCTIONS[args.func]
+    integration.validate_steps(args.steps)
+    integration.validate_limits(args.start, args.end, info)
+
+    result = integration.integrate(
+        info["function"],
+        args.start,
+        args.end,
+        args.steps,
+    )
+
+    print(info["formula"])
+    print(f"Значение интеграла: {result:.4f}")
+    return 0
 
 
 def main():
-    a_str, b_str, c_str = parse_arguments(sys.argv[1:])
-    a, b, c = convert_to_int(a_str, b_str, c_str)
-    validate_range(a, b, c)
-    solve(a, b, c)
-    sys.exit(0)
+    parser = build_parser()
+    args = parser.parse_args()
+
+    if args.command is None:
+        parser.print_help()
+        return 0
+
+    try:
+        if args.command == "solve":
+            return process_solve(args)
+        if args.command == "stats":
+            return process_stats(args)
+        if args.command == "series":
+            return process_series(args)
+        if args.command == "integrate":
+            return process_integrate(args)
+    except (ValueError, EOFError) as error:
+        print(str(error), file=sys.stderr)
+        return 1
+
+    print("ОШИБКА: неизвестная команда", file=sys.stderr)
+    return 1
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
