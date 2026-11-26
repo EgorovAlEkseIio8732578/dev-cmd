@@ -1,0 +1,900 @@
+Тест 1
+Запуск: python mathtool.py
+ввод:
+(пусто)
+вывод:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+
+Консольное приложение для математических расчётов.
+
+positional arguments:
+  {solve,stats,series,integrate}
+    solve               решение уравнения A*x^2 + B*x + C = 0
+    stats               статистика числовой последовательности
+    series              сумма знакочередующегося ряда
+    integrate           численное интегрирование
+
+options:
+  -h, --help            show this help message and exit
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 2
+Запуск: python mathtool.py --help
+ввод:
+(пусто)
+вывод:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+
+Консольное приложение для математических расчётов.
+
+positional arguments:
+  {solve,stats,series,integrate}
+    solve               решение уравнения A*x^2 + B*x + C = 0
+    stats               статистика числовой последовательности
+    series              сумма знакочередующегося ряда
+    integrate           численное интегрирование
+
+options:
+  -h, --help            show this help message and exit
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 3
+Запуск: python mathtool.py solve --help
+ввод:
+(пусто)
+вывод:
+usage: mathtool solve [-h] [-a A] [-b B] [-c C]
+
+options:
+  -h, --help  show this help message and exit
+  -a A        коэффициент A
+  -b B        коэффициент B
+  -c C        коэффициент C
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 4
+Запуск: python mathtool.py stats --help
+ввод:
+(пусто)
+вывод:
+usage: mathtool stats [-h] [--input INPUT]
+
+options:
+  -h, --help     show this help message and exit
+  --input INPUT  файл с числами; без параметра читается стандартный ввод
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 5
+Запуск: python mathtool.py series --help
+ввод:
+(пусто)
+вывод:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+
+options:
+  -h, --help            show this help message and exit
+  --func {sqplus,third}
+  --terms TERMS         количество слагаемых
+  --eps EPS             точность по последнему слагаемому
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 6
+Запуск: python mathtool.py integrate --help
+ввод:
+(пусто)
+вывод:
+usage: mathtool integrate [-h] --func {ratio,root} --from START --to END
+                          --steps STEPS
+
+options:
+  -h, --help           show this help message and exit
+  --func {ratio,root}
+  --from START
+  --to END
+  --steps STEPS
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 7
+Запуск: python mathtool.py badcmd
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: argument command: invalid choice: 'badcmd' (choose from solve, stats, series, integrate)
+Возврат: 2
+
+Тест 8
+Запуск: python mathtool.py solve -a 1 -b -3 -c 2
+ввод:
+(пусто)
+вывод:
+Уравнение квадратное
+D = 1
+x1 = 2.000
+x2 = 1.000
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 9
+Запуск: python mathtool.py solve -c 2 -a 1 -b -3
+ввод:
+(пусто)
+вывод:
+Уравнение квадратное
+D = 1
+x1 = 2.000
+x2 = 1.000
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 10
+Запуск: python mathtool.py solve -a 1 -b -2 -c 1
+ввод:
+(пусто)
+вывод:
+Уравнение квадратное
+D = 0
+x = 1.000
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 11
+Запуск: python mathtool.py solve -a 1 -b 0 -c 5
+ввод:
+(пусто)
+вывод:
+Уравнение квадратное
+D = -20
+Действительных корней нет
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 12
+Запуск: python mathtool.py solve -a 0 -b 2 -c -5
+ввод:
+(пусто)
+вывод:
+Уравнение линейное
+x = 2.500
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 13
+Запуск: python mathtool.py solve -a 0 -b 0 -c 7
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: это не уравнение, неизвестное отсутствует
+Возврат: 1
+
+Тест 14
+Запуск: python mathtool.py solve -a 50000 -b 1 -c 1
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: коэффициент A вне допустимого диапазона
+Возврат: 1
+
+Тест 15
+Запуск: python mathtool.py solve -a 1 -b 50000 -c 1
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: коэффициент B вне допустимого диапазона
+Возврат: 1
+
+Тест 16
+Запуск: python mathtool.py solve -a abc -b 1 -c 1
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool solve [-h] [-a A] [-b B] [-c C]
+mathtool solve: error: argument -a: invalid int value: 'abc'
+Возврат: 2
+
+Тест 17
+Запуск: python mathtool.py solve -x 1 -b -3 -c 2
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: unrecognized arguments: -x 1
+Возврат: 2
+
+Тест 18
+Запуск: python mathtool.py solve -a 1 -b 2
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: укажите все три коэффициента либо ни одного
+Возврат: 1
+
+Тест 19
+Запуск: python mathtool.py solve
+ввод:
+1
+-3
+2
+вывод:
+Введите A: Введите B: Введите C: Уравнение квадратное
+D = 1
+x1 = 2.000
+x2 = 1.000
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 20
+Запуск: python mathtool.py solve
+ввод:
+1
+x
+2
+вывод:
+Введите A: Введите B: 
+ошибки:
+invalid literal for int() with base 10: 'x'
+Возврат: 1
+
+Тест 21
+Запуск: python mathtool.py stats --input numbers.txt
+ввод:
+(пусто)
+вывод:
+Количество: 3
+Сумма: 10.000
+Ср. арифм.: 3.333
+Сумма кв.: 42.000
+Ср. кв.: 3.742
+Дисперсия: 2.889
+СКО: 1.700
+Станд. откл.: 2.082
+Наименьшее: 1.000
+Наибольшее: 5.000
+Положительных: 3
+Отрицательных: 0
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 22
+Запуск: "4 1 5" | python mathtool.py stats
+ввод:
+4 1 5
+вывод:
+Количество: 3
+Сумма: 10.000
+Ср. арифм.: 3.333
+Сумма кв.: 42.000
+Ср. кв.: 3.742
+Дисперсия: 2.889
+СКО: 1.700
+Станд. откл.: 2.082
+Наименьшее: 1.000
+Наибольшее: 5.000
+Положительных: 3
+Отрицательных: 0
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 23
+Запуск: "7" | python mathtool.py stats
+ввод:
+7
+вывод:
+Количество: 1
+Сумма: 7.000
+Ср. арифм.: 7.000
+Сумма кв.: 49.000
+Ср. кв.: 7.000
+Дисперсия: 0.000
+СКО: 0.000
+Станд. откл.: НЕ СУЩЕСТВУЕТ
+Наименьшее: 7.000
+Наибольшее: 7.000
+Положительных: 1
+Отрицательных: 0
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 24
+Запуск: "" | python mathtool.py stats
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: последовательность пуста
+Возврат: 1
+
+Тест 25
+Запуск: "1 2 abc" | python mathtool.py stats
+ввод:
+1 2 abc
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: abc не является числом
+Возврат: 1
+
+Тест 26
+Запуск: "nan" | python mathtool.py stats
+ввод:
+nan
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: число должно быть конечным
+Возврат: 1
+
+Тест 27
+Запуск: "inf" | python mathtool.py stats
+ввод:
+inf
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: число должно быть конечным
+Возврат: 1
+
+Тест 28
+Запуск: python mathtool.py stats --input nosuch.txt
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: файл не открывается
+Возврат: 1
+
+Тест 29
+Запуск: "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1" | python mathtool.py stats
+ввод:
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: слишком много чисел (максимум 20)
+Возврат: 1
+
+Тест 30
+Запуск: "10000" | python mathtool.py stats
+ввод:
+10000
+вывод:
+Количество: 1
+Сумма: 10000.000
+Ср. арифм.: 10000.000
+Сумма кв.: 100000000.000
+Ср. кв.: 10000.000
+Дисперсия: 0.000
+СКО: 0.000
+Станд. откл.: НЕ СУЩЕСТВУЕТ
+Наименьшее: 10000.000
+Наибольшее: 10000.000
+Положительных: 1
+Отрицательных: 0
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 31
+Запуск: "10001" | python mathtool.py stats
+ввод:
+10001
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: значение вне допустимого диапазона
+Возврат: 1
+
+Тест 32
+Запуск: python mathtool.py series --func sqplus --terms 1
+ввод:
+(пусто)
+вывод:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 1
+Сумма ряда: 0.5000
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 33
+Запуск: python mathtool.py series --func sqplus --terms 6
+ввод:
+(пусто)
+вывод:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 6
+Сумма ряда: 0.3526
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 34
+Запуск: python mathtool.py series --func sqplus --eps 0.0001
+ввод:
+(пусто)
+вывод:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 100
+Сумма ряда: 0.3639
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 35
+Запуск: python mathtool.py series --func third --eps 0.0001
+ввод:
+(пусто)
+вывод:
+S = 1/3 - 1/6 + 1/9 - 1/12 + ...
+Слагаемых: 3334
+Сумма ряда: 0.2310
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 36
+Запуск: python mathtool.py series --func sqplus --terms 10000
+ввод:
+(пусто)
+вывод:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 10000
+Сумма ряда: 0.3640
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 37
+Запуск: python mathtool.py series --func sqplus --terms 0
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: количество слагаемых вне диапазона
+Возврат: 1
+
+Тест 38
+Запуск: python mathtool.py series --func sqplus --terms 10001
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: количество слагаемых вне диапазона
+Возврат: 1
+
+Тест 39
+Запуск: python mathtool.py series --func sqplus --eps 0
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: точность вне диапазона
+Возврат: 1
+
+Тест 40
+Запуск: python mathtool.py series --func sqplus --eps 0.001
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: точность вне диапазона
+Возврат: 1
+
+Тест 41
+Запуск: python mathtool.py series --func third --eps 0.000001
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: точность не достигнута
+Возврат: 1
+
+Тест 42
+Запуск: python mathtool.py series --func sqplus --terms 6 --eps 0.0001
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+mathtool series: error: argument --eps: not allowed with argument --terms
+Возврат: 2
+
+Тест 43
+Запуск: python mathtool.py series --func sqplus
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+mathtool series: error: one of the arguments --terms --eps is required
+Возврат: 2
+
+Тест 44
+Запуск: python mathtool.py series --func bad --terms 6
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+mathtool series: error: argument --func: invalid choice: 'bad' (choose from sqplus, third)
+Возврат: 2
+
+Тест 45
+Запуск: python mathtool.py series --func sqplus --te 6
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+mathtool series: error: one of the arguments --terms --eps is required
+Возврат: 2
+
+Тест 46
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 1
+ввод:
+(пусто)
+вывод:
+F(x) = x / (x + 1)
+Значение интеграла: 0.0000
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 47
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 10
+ввод:
+(пусто)
+вывод:
+F(x) = x / (x + 1)
+Значение интеграла: 15.7335
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 48
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 1000
+ввод:
+(пусто)
+вывод:
+F(x) = x / (x + 1)
+Значение интеграла: 16.9459
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 49
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 10000
+ввод:
+(пусто)
+вывод:
+F(x) = x / (x + 1)
+Значение интеграла: 16.9545
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 50
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 100000
+ввод:
+(пусто)
+вывод:
+F(x) = x / (x + 1)
+Значение интеграла: 16.9554
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 51
+Запуск: python mathtool.py integrate --func ratio --from 5 --to 10 --steps 1000
+ввод:
+(пусто)
+вывод:
+F(x) = x / (x + 1)
+Значение интеграла: 4.3937
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 52
+Запуск: python mathtool.py integrate --func root --from -4.9 --to 4.9 --steps 1000
+ввод:
+(пусто)
+вывод:
+F(x) = sqrt(x^2 + 1)
+Значение интеграла: 26.7976
+ошибки:
+(пусто)
+Возврат: 0
+
+Тест 53
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 0
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: количество шагов вне диапазона
+Возврат: 1
+
+Тест 54
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 100001
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: количество шагов вне диапазона
+Возврат: 1
+
+Тест 55
+Запуск: python mathtool.py integrate --func ratio --from 20 --to 20 --steps 100
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: начальный предел не меньше конечного
+Возврат: 1
+
+Тест 56
+Запуск: python mathtool.py integrate --func ratio --from 4 --to 1 --steps 100
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: начальный предел не меньше конечного
+Возврат: 1
+
+Тест 57
+Запуск: python mathtool.py integrate --func ratio --from -1 --to 1 --steps 100
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: предел вне промежутка
+Возврат: 1
+
+Тест 58
+Запуск: python mathtool.py integrate --func root --from -5 --to 5 --steps 100
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: предел вне промежутка
+Возврат: 1
+
+Тест 59
+Запуск: python mathtool.py integrate --func root --from -5.1 --to 1 --steps 100
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: предел вне промежутка
+Возврат: 1
+
+Тест 60
+Запуск: python mathtool.py integrate --func root --from -4 --to 5 --steps 100
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: предел вне промежутка
+Возврат: 1
+
+Тест 61
+Запуск: python mathtool.py integrate --func ratio --from nan --to 20 --steps 100
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: пределы должны быть конечными числами
+Возврат: 1
+
+Тест 62
+Запуск: python mathtool.py integrate --func ratio --from 0 --to inf --steps 100
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+ОШИБКА: пределы должны быть конечными числами
+Возврат: 1
+
+Тест 63
+Запуск: python mathtool.py integrate --func bad --from 0 --to 1 --steps 10
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool integrate [-h] --func {ratio,root} --from START --to END
+                          --steps STEPS
+mathtool integrate: error: argument --func: invalid choice: 'bad' (choose from ratio, root)
+Возврат: 2
+
+Тест 64
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool integrate [-h] --func {ratio,root} --from START --to END
+                          --steps STEPS
+mathtool integrate: error: the following arguments are required: --steps
+Возврат: 2
+
+Тест 65
+Запуск: python mathtool.py solve -a
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool solve [-h] [-a A] [-b B] [-c C]
+mathtool solve: error: argument -a: expected one argument
+Возврат: 2
+
+Тест 66
+Запуск: python mathtool.py solve -a 1 -b 2 -c 3 extra
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: unrecognized arguments: extra
+Возврат: 2
+
+Тест 67
+Запуск: python mathtool.py stats --input
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool stats [-h] [--input INPUT]
+mathtool stats: error: argument --input: expected one argument
+Возврат: 2
+
+Тест 68
+Запуск: python mathtool.py stats --input numbers.txt extra
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: unrecognized arguments: extra
+Возврат: 2
+
+Тест 69
+Запуск: python mathtool.py stats --bad
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: unrecognized arguments: --bad
+Возврат: 2
+
+Тест 70
+Запуск: python mathtool.py series --func sqplus --terms
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+mathtool series: error: argument --terms: expected one argument
+Возврат: 2
+
+Тест 71
+Запуск: python mathtool.py series --func sqplus --terms 6 extra
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: unrecognized arguments: extra
+Возврат: 2
+
+Тест 72
+Запуск: python mathtool.py series --bad --terms 6
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+mathtool series: error: the following arguments are required: --func
+Возврат: 2
+
+Тест 73
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool integrate [-h] --func {ratio,root} --from START --to END
+                          --steps STEPS
+mathtool integrate: error: argument --steps: expected one argument
+Возврат: 2
+
+Тест 74
+Запуск: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 10 extra
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: unrecognized arguments: extra
+Возврат: 2
+
+Тест 75
+Запуск: python mathtool.py integrate --bad --from 0 --to 1 --steps 10
+ввод:
+(пусто)
+вывод:
+(пусто)
+ошибки:
+usage: mathtool integrate [-h] --func {ratio,root} --from START --to END
+                          --steps STEPS
+mathtool integrate: error: the following arguments are required: --func
+Возврат: 2
